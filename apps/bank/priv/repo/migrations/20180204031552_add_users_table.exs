@@ -5,9 +5,9 @@ defmodule Bank.Repo.Migrations.AddUsersTable do
         create table(:users) do
           add :name, :string, size: 50, null: false
           add :email, :string, size: 100, null: false
-          add :password, :string, size: 20, null: false
+          add :password, :string, size: 100, null: false
 
-          timestamps
+          timestamps()
         end
         create unique_index(:users, [:email])
   end
