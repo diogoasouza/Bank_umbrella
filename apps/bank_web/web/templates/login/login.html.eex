@@ -1,0 +1,6 @@
+<%= form_for @conn, login_path(@conn, :login),[as: :login], fn f -> %>
+  <%= text_input f, :email %>
+  <%= text_input f, :password %>
+  <%= submit "Login" %>
+
+<% end %>

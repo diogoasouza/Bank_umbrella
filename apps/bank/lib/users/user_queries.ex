@@ -1,4 +1,4 @@
-defmodule Rsvp.UsersQueries do
+defmodule Bank.UsersQueries do
   import Ecto.Query
 
   alias Bank.{Repo, Users}
@@ -12,11 +12,8 @@ defmodule Rsvp.UsersQueries do
 
   end
 
-  def get_all_for_location(email) do
-      query = from e in Users,
-        where: e.email == ^email
-
-      Repo.all(query)
+  def get_by_email(email) do
+    Repo.get_by(Users, email: email)
   end
 
   def get_by_id(id) do

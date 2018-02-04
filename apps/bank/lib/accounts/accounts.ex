@@ -4,9 +4,9 @@ defmodule Bank.Accounts do
   schema "accounts" do
     field :balance, :float
     field :currency, :string
-    belongs_to :user, Bank.Users, foreign_key: :Owner
+    belongs_to :user, Bank.Users, foreign_key: :owner
     has_many :outgoing_transfers, Bank.Transfers, foreign_key: :to
-    has_many :incoming_transfers, Bank.Transfers, foreign_key: :from 
+    has_many :incoming_transfers, Bank.Transfers, foreign_key: :from
     timestamps()
   end
 
