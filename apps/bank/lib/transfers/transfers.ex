@@ -10,11 +10,11 @@ defmodule Bank.Transfers do
     timestamps()
   end
 
-  @required_fields ~w(amount currency to from date)a
-
+  @required_fields ~w(amount to)a
+  @optional_fields ~w(currency date from)a
   def changeset(user, params \\ %{}) do
         user
-        |> cast(params, @required_fields)
+        |> cast(params, @required_fields ++ @optional_fields)
         |> validate_required(@required_fields)
   end
 

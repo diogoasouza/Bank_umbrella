@@ -7,11 +7,11 @@ defmodule BankWeb.LoginController do
 
     def login(conn, %{"login" => %{"email" => email, "password" => password}}) do
         expiration = 60*60*24*7
-        IO.inspect(email)
-        IO.inspect(password)
-        IO.inspect(Bank.Users.signup(email,password))
+
+        user = Bank.Users.signup(email,password)
+        IO.puts("/summary/"<>Integer.to_string(user.id))
         conn
-        |> redirect(to: "/")
+        |> redirect(to: "/summary/"<>Integer.to_string(user.id))
         # conn
         # |> Plug.Conn.put_resp_cookie("user_name", name, max_age: expiration)
         # |> redirect(to: "/")

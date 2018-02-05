@@ -1,0 +1,31 @@
+<h1>All your transfers: </h1>
+<div style="display:table; display:table-cell" >
+  <h6> Outgoing transfers: </h6>
+  <div class="list-group">
+      <%= for e <- @sender do %>
+      <div class="list-group-item">
+          <span>
+              <span class="text-muted">Valor: <%= format_money e.amount %> <%= e.currency %></span>
+              <span class="pull-right">
+                  <strong>Data: <%= e.date %></strong>
+              </span>
+          </span>
+      </div>
+      <% end %>
+  </div>
+</div>
+<div style="display:table; display:table-cell" >
+  <h6> Incoming transfers: </h6>
+<div class="list-group">
+    <%= for e <- @receiver do %>
+    <div class="list-group-item">
+        <span>
+            <span class="text-muted">Valor: <%= format_money e.amount %> <%= e.currency %></span>
+            <span class="pull-right">
+                <strong>Data: <%= e.date %></strong>
+            </span>
+        </span>
+    </div>
+    <% end %>
+</div>
+</div>

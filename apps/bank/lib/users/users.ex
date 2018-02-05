@@ -28,7 +28,9 @@ defmodule Bank.Users do
 
    def signup(email,password) do
      user = Bank.UsersQueries.get_by_email(email)
-     password === user.password
+     if password === user.password do
+       user
+     end
 
    end
    # def validate_password(user) do
