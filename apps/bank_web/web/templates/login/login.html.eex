@@ -1,6 +1,13 @@
 <%= form_for @conn, login_path(@conn, :login),[as: :login], fn f -> %>
-  <%= text_input f, :email %>
-  <%= text_input f, :password %>
+<div class="input-group">
+    <%= label f, "email:", class: "input-label"%>
+    <%= text_input f, :email, class: "input-text" %>
+</div>
+<div class="input-group">
+    <%= label f, "password:", class: "input-label"%>
+    <%= text_input f, :password, class: "input-text" %>
+</div>
   <%= submit "Login" %>
 
 <% end %>
+  <a href="/login/new" class="btn btn-primary pull-left">Nova Conta</a>

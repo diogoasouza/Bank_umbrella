@@ -40,5 +40,4 @@ defmodule Bank.TransfersQueries do
         Repo.insert(transfer)
     end
 
-
 end

@@ -1,0 +1,9 @@
+
+<%= form_for @changeset, currency_path(@conn, :convert, @account.id), fn f -> %>
+<div class="input-group">
+    <%= label f, "Currency:", class: "input-label"%>
+    <%= select(f, :currency, ["Real": "Real", "Dollar": "Dollar", "Euro": "Euro"]) %>
+</div>
+  <%= submit "Converter" %>
+
+<% end %>

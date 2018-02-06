@@ -19,10 +19,14 @@ defmodule BankWeb.Router do
     get "/", PageController, :index
     get "/login", LoginController, :index
     post "/login", LoginController, :login
+    get "/login/new", LoginController, :new
+    post "/login/new", LoginController, :add
     get "/summary/:id", SummaryController, :index
     get "/transfers/:id", TransfersController, :list
     get "/transfers/:id/new", TransfersController, :new
     post "/transfers/:id/new", TransfersController, :add
+    get "/currency/:id/convert", CurrencyController, :index
+    post "/currency/:id/convert", CurrencyController, :convert
   end
 
   # Other scopes may use custom stacks.

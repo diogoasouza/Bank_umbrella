@@ -1,4 +1,4 @@
-<h1>Make a transfers</h1>
+<h1>Make a transfer</h1>
 
 <%= form_for @changeset, transfers_path(@conn, :new, @account.owner), fn f -> %>
     <div class="form-group">
@@ -8,7 +8,7 @@
     </div>
 
     <div class="form-group">
-        <%= label f, :currency,  @account.currency %> %>
+        <%= label f, :currency,  @account.currency %> 
     </div>
 
     <div class="form-group">

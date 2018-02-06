@@ -19,4 +19,8 @@ defmodule Bank.Accounts do
         |> validate_required(@required_fields)
   end
 
+  def new_account(user) do
+    changeset = changeset(%Bank.Accounts{}, %{balance: 1000, currency: "real", owner: user })
+    Bank.AccountsQueries.create(changeset)
+  end
 end

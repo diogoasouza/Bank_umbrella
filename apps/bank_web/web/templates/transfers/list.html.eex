@@ -1,31 +1,35 @@
 <h1>All your transfers: </h1>
-<div style="display:table; display:table-cell" >
+<div style="display: table; width:100%">
+<div style=" display:table-cell; width:50%" >
   <h6> Outgoing transfers: </h6>
   <div class="list-group">
       <%= for e <- @sender do %>
       <div class="list-group-item">
           <span>
-              <span class="text-muted">Valor: <%= format_money e.amount %> <%= e.currency %></span>
-              <span class="pull-right">
-                  <strong>Data: <%= e.date %></strong>
-              </span>
+              <span class="text-muted">Valor: <%= format_money e.amount %> <%= format_currency e.currency %></span>
+              <span class="pull-right">Conta destino: <%=e.to %> </span>
+              <p>
+                  <strong>Data: </strong><%= format_date e.date %> at <%= format_time e.date%>
+              </p>
           </span>
       </div>
       <% end %>
   </div>
 </div>
-<div style="display:table; display:table-cell" >
+<div style="display:table-cell; width:50%" >
   <h6> Incoming transfers: </h6>
 <div class="list-group">
     <%= for e <- @receiver do %>
     <div class="list-group-item">
         <span>
-            <span class="text-muted">Valor: <%= format_money e.amount %> <%= e.currency %></span>
-            <span class="pull-right">
-                <strong>Data: <%= e.date %></strong>
-            </span>
+            <span class="text-muted">Valor: <%= format_money e.amount %> <%= format_currency e.currency %></span>
+            <span class="pull-right">Conta remetente: <%=e.from %> </span>
+            <p>
+                <strong>Data: </strong><%= format_date e.date %> at <%= format_time e.date%>
+            </p>
         </span>
     </div>
     <% end %>
+</div>
 </div>
 </div>

@@ -1,30 +1,27 @@
-defmodule BankWeb.TransfersController do
+defmodule BankWeb.CurrencyController do
     use BankWeb.Web, :controller
 
 
-    #
-    # def index(conn, params) do
-    #     account = Bank.AccountsQueries.get_by_owner(params["id"])
-    #     user = Bank.UsersQueries.get_by_id(params["id"])
-    #     render conn, "summary.html", [account: account, user: user]
-    # end
 
-    def list(conn, params) do
+    def index(conn, params) do
         account = Bank.AccountsQueries.get_by_owner(params["id"])
-        transfers_receiver  = Bank.TransfersQueries.get_all_by_receiver(account.id)
-        transfers_sender  = Bank.TransfersQueries.get_all_by_sender(account.id)
-        render conn, "list.html", [sender: transfers_sender, receiver: transfers_receiver]
+        IO.inspect(account)
+        changeset = Bank.Accounts.changeset(%Bank.Accounts{}, %{})
+        render conn, "convert.html", [changeset: changeset, account: account]
     end
 
-    def new(conn, params) do
-      changeset = Bank.Transfers.changeset(%Bank.Transfers{}, %{})
-      account = Bank.AccountsQueries.get_by_owner(params["id"])
-      render conn, "create.html", [changeset: changeset, account: account]
-    end
-
-    def add(conn,  %{"transfers" => transfers, "id" => id}) do
-      account = Bank.AccountsQueries.get_by_owner(id)
-      Bank.TransfersQueries.new_transfer(account.id, String.to_integer(Map.get(transfers, "to")), Map.get(transfers, "amount"), account.currency)
+    def convert(conn, %{"accounts" => accounts, "id" => id}) do
+      currency = Map.get(accounts, "currency")
+      account = Bank.AccountsQueries.get_by_owner(String.to_integer(id))
+      IO.inspect(currency)
+      Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{currency: currency}), "currency", currency)
+      # case currency do
+      #   "Real" ->
+      #   "Dollar" ->
+      #   "Euro" ->
+      # end
+      # account = Bank.AccountsQueries.get_by_owner(id)
+      # Bank.TransfersQueries.new_transfer(account.id, String.to_integer(Map.get(transfers, "to")), Map.get(transfers, "amount"), account.currency)
       redirect conn, to: summary_path(conn, :index, account.owner)
     end
 

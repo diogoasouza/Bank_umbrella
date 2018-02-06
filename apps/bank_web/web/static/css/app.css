@@ -1,1 +1,11 @@
 /* This file is for your main application css. */
+.input-group{
+     width: 100%;
+ }
+ .input-label{
+     width: 45%;
+     text-align: left;
+ }
+ .input-text {
+     width: 55%;
+ }
