@@ -4,3 +4,4 @@
 <a href="/transfers/" class="btn btn-primary pull-right">Ver transferencias</a>
 <a href="/transfers/new" class="btn btn-primary pull-right">Fazer nova transferencia</a>
 <a href="/currency/convert" class="btn btn-primary pull-right">Converter moeda da conta</a>
+<a href="/login" class="btn btn-primary pull-right">Logout</a>

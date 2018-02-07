@@ -2,14 +2,14 @@ defmodule BankWeb.LoginController do
     use BankWeb.Web, :controller
 
     def index(conn, _) do
-        render conn, "login.html"
+      conn
+      |> reset_session
+      |> render "login.html"
     end
 
     def login(conn, %{"login" => %{"email" => email, "password" => password}}) do
         expiration = 60*60*24
-
         user = Bank.Users.signup(email,password)
-        IO.puts("/summary/"<>Integer.to_string(user.id))
         conn
         |> Plug.Conn.put_session("user_id", Integer.to_string(user.id))
         |> redirect(to: "/summary/")
@@ -31,4 +31,11 @@ defmodule BankWeb.LoginController do
       redirect conn, to: login_path(conn, :index)
     end
 
+    def reset_session(conn) do
+      if Plug.Conn.get_session(conn, "user_id") do
+        Plug.Conn.clear_session(conn)
+      else
+        conn
+      end
+    end
 end

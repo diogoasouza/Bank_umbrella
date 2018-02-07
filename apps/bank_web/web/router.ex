@@ -9,18 +9,18 @@ defmodule BankWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :authorized do
+    plug :browser
+    plug BankWeb.AuthorizedPlug
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", BankWeb do
-    pipe_through :browser # Use the default browser stack
-
+    pipe_through :authorized
     get "/", PageController, :index
-    get "/login", LoginController, :index
-    post "/login", LoginController, :login
-    get "/login/new", LoginController, :new
-    post "/login/new", LoginController, :add
     get "/summary/", SummaryController, :index
     get "/transfers/", TransfersController, :list
     get "/transfers/new", TransfersController, :new
@@ -29,6 +29,15 @@ defmodule BankWeb.Router do
     post "/currency/convert", CurrencyController, :convert
   end
 
+  scope "/login", BankWeb do
+    pipe_through :browser # Use the default browser stack
+
+
+    get "/", LoginController, :index
+    post "/", LoginController, :login
+    get "/new", LoginController, :new
+    post "/new", LoginController, :add
+  end
   # Other scopes may use custom stacks.
   # scope "/api", BankWeb do
   #   pipe_through :api
