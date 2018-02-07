@@ -33,13 +33,7 @@ defmodule Bank.AccountsQueries do
         Repo.update changes
     end
 
-    def update_field(changeset, field, value) do
-      IO.puts("ENTROU NO UPDATE FIELD")
-      keyword = Keyword.new
-      keyword = Keyword.put(keyword, String.to_atom(field), value)
-      IO.inspect(keyword)
-      # Ecto.Changeset.change changeset, keyword
-      IO.inspect(changeset)
+    def update_field(changeset) do
       Repo.update changeset
     end
 

@@ -12,16 +12,32 @@ defmodule BankWeb.CurrencyController do
 
     def convert(conn, %{"accounts" => accounts, "id" => id}) do
       currency = Map.get(accounts, "currency")
-      account = Bank.AccountsQueries.get_by_owner(String.to_integer(id))
+      account = Bank.AccountsQueries.get_by_id(String.to_integer(id))
       IO.inspect(currency)
-      Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{currency: currency}), "currency", currency)
-      # case currency do
-      #   "Real" ->
-      #   "Dollar" ->
-      #   "Euro" ->
-      # end
-      # account = Bank.AccountsQueries.get_by_owner(id)
-      # Bank.TransfersQueries.new_transfer(account.id, String.to_integer(Map.get(transfers, "to")), Map.get(transfers, "amount"), account.currency)
+      amount = account.balance
+      if account.currency != currency do
+        amount =
+          case currency do
+            "Real" -> if account.currency == "Dollar" do
+              amount * 3.2
+            else
+              amount * 4
+            end
+            "Dollar" ->if account.currency == "Real" do
+              amount * 0.3
+            else
+              amount * 1.2
+            end
+            "Euro" ->if account.currency == "Real" do
+              amount * 0.25
+            else
+              amount * 0.8
+            end
+          end
+          Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{currency: currency}))
+          Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{balance: amount}))
+      end
+
       redirect conn, to: summary_path(conn, :index, account.owner)
     end
 
