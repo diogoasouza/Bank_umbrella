@@ -20,7 +20,7 @@ defmodule Bank.Accounts do
   end
 
   def new_account(user) do
-    changeset = changeset(%Bank.Accounts{}, %{balance: 1000, currency: "real", owner: user })
+    changeset = changeset(%Bank.Accounts{}, %{balance: 1000, currency: "Real", owner: user })
     Bank.AccountsQueries.create(changeset)
   end
 end

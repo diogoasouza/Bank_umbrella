@@ -9,23 +9,26 @@ defmodule BankWeb.TransfersController do
     #     render conn, "summary.html", [account: account, user: user]
     # end
 
-    def list(conn, params) do
-        account = Bank.AccountsQueries.get_by_owner(params["id"])
-        transfers_receiver  = Bank.TransfersQueries.get_all_by_receiver(account.id)
-        transfers_sender  = Bank.TransfersQueries.get_all_by_sender(account.id)
+    def list(conn, _params) do
+        account_id = String.to_integer(Plug.Conn.get_session(conn, "account_id"))
+
+        transfers_receiver  = Bank.TransfersQueries.get_all_by_receiver(account_id)
+        transfers_sender  = Bank.TransfersQueries.get_all_by_sender(account_id)
         render conn, "list.html", [sender: transfers_sender, receiver: transfers_receiver]
     end
 
-    def new(conn, params) do
+    def new(conn, _params) do
+      account_id = String.to_integer(Plug.Conn.get_session(conn, "account_id"))
       changeset = Bank.Transfers.changeset(%Bank.Transfers{}, %{})
-      account = Bank.AccountsQueries.get_by_owner(params["id"])
+      account = Bank.AccountsQueries.get_by_owner(account_id)
       render conn, "create.html", [changeset: changeset, account: account]
     end
 
-    def add(conn,  %{"transfers" => transfers, "id" => id}) do
-      account = Bank.AccountsQueries.get_by_owner(id)
+    def add(conn,  %{"transfers" => transfers}) do
+      user_id =  String.to_integer(Plug.Conn.get_session(conn, "user_id"))
+      account = Bank.AccountsQueries.get_by_owner(user_id)
       Bank.TransfersQueries.new_transfer(account.id, String.to_integer(Map.get(transfers, "to")), Map.get(transfers, "amount"), account.currency)
-      redirect conn, to: summary_path(conn, :index, account.owner)
+      redirect conn, to: summary_path(conn, :index)
     end
 
     # def create(conn, %{errors: errors}) do

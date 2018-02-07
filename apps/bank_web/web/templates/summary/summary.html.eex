@@ -1,6 +1,6 @@
 <h4 class="list-group-item-heading">Bem vindo <%= @user.name %>!</h4>
 <h5 class="list-group-item-heading">Numero da conta: <%= get_account @user.id %></h5>
 <h6 class="list-group-item-heading">Seu saldo eh de <%= format_money @account.balance %> <%= format_currency @account.currency %>!</h6>
-<a href="/transfers/<%=Integer.to_string(@user.id)%>" class="btn btn-primary pull-right">Ver transferencias</a>
-<a href="/transfers/<%=Integer.to_string(@user.id)%>/new" class="btn btn-primary pull-right">Fazer nova transferencia</a>
-<a href="/currency/<%=Integer.to_string(@user.id)%>/convert" class="btn btn-primary pull-right">Converter moeda da conta</a>
+<a href="/transfers/" class="btn btn-primary pull-right">Ver transferencias</a>
+<a href="/transfers/new" class="btn btn-primary pull-right">Fazer nova transferencia</a>
+<a href="/currency/convert" class="btn btn-primary pull-right">Converter moeda da conta</a>

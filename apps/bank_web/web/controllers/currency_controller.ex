@@ -3,29 +3,27 @@ defmodule BankWeb.CurrencyController do
 
 
 
-    def index(conn, params) do
-        account = Bank.AccountsQueries.get_by_owner(params["id"])
+    def index(conn, _params) do
+        account_id = String.to_integer(Plug.Conn.get_session(conn, "account_id"))
+        account = Bank.AccountsQueries.get_by_owner(account_id)
         IO.inspect(account)
         changeset = Bank.Accounts.changeset(%Bank.Accounts{}, %{})
         render conn, "convert.html", [changeset: changeset, account: account]
     end
 
-    def convert(conn, %{"accounts" => accounts, "id" => id}) do
+    def convert(conn, %{"accounts" => accounts}) do
       currency = Map.get(accounts, "currency")
-      account = Bank.AccountsQueries.get_by_id(String.to_integer(id))
-      IO.inspect(currency)
+      account_id = String.to_integer(Plug.Conn.get_session(conn, "account_id"))
+      account = Bank.AccountsQueries.get_by_id(account_id)
       amount = account.balance
       account_currency_api = format_currency(account.currency)
       currency_api = format_currency(currency)
       if account.currency != currency do
-        IO.puts("TENTANDO PEGAR DADO DA API")
         amount = amount * get_rate(account_currency_api, currency_api)
-
         Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{currency: currency}))
         Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{balance: amount}))
       end
-
-      redirect conn, to: summary_path(conn, :index, account.owner)
+      redirect conn, to: summary_path(conn, :index)
     end
 
     def get_rate(from,to) do
