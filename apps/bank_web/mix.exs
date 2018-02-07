@@ -23,7 +23,7 @@ defmodule BankWeb.Mixfile do
   def application do
     [
       mod: {BankWeb, []},
-      extra_applications: [:logger, :bank]
+      extra_applications: [:logger, :bank, :httpoison]
     ]
   end
 
@@ -43,6 +43,7 @@ defmodule BankWeb.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:phoenix_ecto, "~> 3.1.0-rc.0"},
+      {:httpoison, "~> 1.0"},
       {:bank, in_umbrella: true}
     ]
   end

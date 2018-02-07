@@ -15,32 +15,36 @@ defmodule BankWeb.CurrencyController do
       account = Bank.AccountsQueries.get_by_id(String.to_integer(id))
       IO.inspect(currency)
       amount = account.balance
+      account_currency_api = format_currency(account.currency)
+      currency_api = format_currency(currency)
       if account.currency != currency do
-        amount =
-          case currency do
-            "Real" -> if account.currency == "Dollar" do
-              amount * 3.2
-            else
-              amount * 4
-            end
-            "Dollar" ->if account.currency == "Real" do
-              amount * 0.3
-            else
-              amount * 1.2
-            end
-            "Euro" ->if account.currency == "Real" do
-              amount * 0.25
-            else
-              amount * 0.8
-            end
-          end
-          Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{currency: currency}))
-          Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{balance: amount}))
+        IO.puts("TENTANDO PEGAR DADO DA API")
+        amount = amount * get_rate(account_currency_api, currency_api)
+
+        Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{currency: currency}))
+        Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{balance: amount}))
       end
 
       redirect conn, to: summary_path(conn, :index, account.owner)
     end
 
+    def get_rate(from,to) do
+      call = "https://api.fixer.io/latest?base=" <> from
+      resp = HTTPoison.get! call
+
+      resp.body
+      |> Poison.decode!
+      |> Map.get("rates")
+      |> Map.get(to)
+    end
+
+    def format_currency(currency) do
+      case currency do
+        "Real" -> "BRL"
+        "Dollar" -> "USD"
+        "Euro" -> "EUR"
+      end
+    end
     # def create(conn, %{errors: errors}) do
     #     render conn, "create.html", changeset: errors
     # end
