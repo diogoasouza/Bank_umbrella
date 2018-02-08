@@ -3,7 +3,6 @@ defmodule BankWeb.LoginController do
 
     def index(conn, _) do
       conn
-      |> reset_session
       |> render "login.html"
     end
 
@@ -12,7 +11,7 @@ defmodule BankWeb.LoginController do
         user = Bank.Users.signup(email,password)
         conn
         |> Plug.Conn.put_session("user_id", Integer.to_string(user.id))
-        |> redirect(to: "/summary/")
+        |> redirect(to: summary_path(conn, :index))
 
     end
 
@@ -27,6 +26,12 @@ defmodule BankWeb.LoginController do
       user = Bank.UsersQueries.get_by_email(users["email"])
       Bank.Accounts.new_account(user.id)
       redirect conn, to: login_path(conn, :index)
+    end
+
+    def delete(conn, _) do
+      conn
+      |> reset_session
+      |> redirect(to: login_path(conn,:index))
     end
 
     def reset_session(conn) do

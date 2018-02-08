@@ -1,5 +1,6 @@
 defmodule BankWeb.SummaryView do
     use BankWeb.Web, :view
+    use BankWeb.Web, :controller
 
     def format_money(amount) do
       Float.to_string(amount, decimals: 2)
@@ -21,5 +22,11 @@ defmodule BankWeb.SummaryView do
     def get_account(id) do
       account = Bank.AccountsQueries.get_by_owner(id)
       Integer.to_string(account.id)
+    end
+
+    def logout(conn) do
+      conn
+      |> Plug.Conn.clear_session
+      |> redirect(to: login_path(conn, :index))
     end
 end

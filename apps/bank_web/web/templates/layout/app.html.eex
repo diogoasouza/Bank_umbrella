@@ -12,6 +12,13 @@
   </head>
 
   <body>
+    <ul class="nav nav-pills col-xs-offset-7">
+      <li><a href="<%= summary_path(@conn, :index) %>" >Home</a></li>
+      <li><a href="<%= transfers_path(@conn, :list) %>" >Ver transferencias</a></li>
+      <li><a href="<%= transfers_path(@conn, :new) %>" >Fazer nova transferencia</a></li>
+      <li><a href="<%= currency_path(@conn, :index) %>" >Converter moeda da conta</a></li>
+      <li><a href="<%= login_path(@conn, :delete) %>" >Logout </a></li>
+    </ul>
     <div class="container">
       <header class="header">
         <nav role="navigation">

@@ -34,6 +34,7 @@ defmodule BankWeb.Router do
 
 
     get "/", LoginController, :index
+    get "/delete", LoginController, :delete
     post "/", LoginController, :login
     get "/new", LoginController, :new
     post "/new", LoginController, :add
