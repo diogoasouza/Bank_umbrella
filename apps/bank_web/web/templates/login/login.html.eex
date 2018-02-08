@@ -5,7 +5,7 @@
 </div>
 <div class="input-group">
     <%= label f, "password:", class: "input-label"%>
-    <%= text_input f, :password, class: "input-text" %>
+    <%= password_input f, :password, class: "input-text" %>
 </div>
   <%= submit "Login" %>
 

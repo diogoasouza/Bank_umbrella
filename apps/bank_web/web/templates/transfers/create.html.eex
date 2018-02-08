@@ -3,7 +3,7 @@
 <%= form_for @changeset, transfers_path(@conn, :new), fn f -> %>
     <div class="form-group">
         <%= label f, :amount, "Amount" %>
-        <%= text_input f, :amount, class: "form-control" %>
+        <%= number_input f, :amount, class: "form-control" %>
         <%= error_tag f, :amount %>
     </div>
 
@@ -14,7 +14,7 @@
 
     <div class="form-group">
         <%= label f, :to, "Receiver's account number" %>
-        <%= text_input f, :to, class: "form-control" %>
+        <%= number_input f, :to, class: "form-control" %>
         <%= error_tag f, :to %>
     </div>
 
