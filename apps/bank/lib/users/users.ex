@@ -26,6 +26,14 @@ defmodule Bank.Users do
      |> validate_password()
    end
 
+   def new_user(user, params \\ %{}) do
+     user
+     |> cast(params, @required_fields)
+     |> validate_required(@required_fields)
+     |> validate_format(:email, ~r/@/)
+     |> unique_constraint(:email)
+   end
+
    # def validate_password(user) do
    #   password = get_change(user, :password)
    #   user2 = Bank.Repo.get(Users, get_change(user, :id))
