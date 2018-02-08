@@ -31,7 +31,6 @@ defmodule Bank.TransfersQueries do
 
  def new_transfer(sender,receiver,amount, currency) do
      changeset = Bank.Transfers.new_transfer(%Bank.Transfers{}, %{amount: amount, currency: currency, to: receiver, from: sender, date: NaiveDateTime.utc_now()})
-     IO.inspect(changeset)
      if changeset.valid? do
        Bank.AccountsQueries.withdrawl(sender, amount)
        Bank.AccountsQueries.deposit(receiver, amount)

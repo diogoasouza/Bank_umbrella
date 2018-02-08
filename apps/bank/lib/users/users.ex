@@ -17,36 +17,40 @@ defmodule Bank.Users do
         |> validate_required(@required_fields)
   end
 
-  # def signup(user, params \\ %{}) do
-  #       user
-  #    |> cast(params, [:email, :password])
-  #    # |> unique_constraint(:email, message: "that email is already taken")
-  #    # |> validate_required(~w(email password)a)
-  #    |> validate_format(:email, ~r/@/)
-  #    |> validate_password()
-  #  end
-
-   def signup(email,password) do
-     user = Bank.UsersQueries.get_by_email(email)
-     if password === user.password do
-       user
-     end
-
+  def signup(user, params \\ %{}) do
+        user
+     |> cast(params, [:email, :password])
+     |> validate_required([:email, :password])
+     |> validate_format(:email, ~r/@/)
+     |> validate_user()
+     |> validate_password()
    end
+
    # def validate_password(user) do
    #   password = get_change(user, :password)
    #   user2 = Bank.Repo.get(Users, get_change(user, :id))
    #   Comeonin.Ecto.Password.valid?(password, user2.password)
    # end
-   def validate_password(changeset) do
-     password = changeset.password
-     user = Bank.UsersQueries.get_by_id(changeset.id)
-     # user = Bank.Repo.get(Users, get_change(user, :id))
-     if password == user.password do
-       changeset
-     else
-       changeset
-        |> add_error(:password_confirmation, "wrong password!")
-     end
+
+   defp validate_user(changeset) do
+       user = Bank.UsersQueries.get_by_email(get_change(changeset, :email))
+       if user do
+         changeset
+       else
+         changeset
+          |> add_error(:user, "User doesnt exist!")
+       end
    end
+
+   defp validate_password(changeset) do
+       password = get_change(changeset, :password)
+       user = Bank.UsersQueries.get_by_email(get_change(changeset, :email))
+       if user && password == user.password do
+         changeset
+       else
+         changeset
+          |> add_error(:password, "Password and email doesnt match!")
+       end
+   end
+
 end

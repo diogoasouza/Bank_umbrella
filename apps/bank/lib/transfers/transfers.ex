@@ -27,14 +27,18 @@ defmodule Bank.Transfers do
     |> validate_balance
   end
   defp validate_currency(changeset) do
-      IO.inspect(changeset)
       receiver_account = Bank.AccountsQueries.get_by_id(get_change(changeset, :to))
-      if receiver_account.currency === get_change(changeset, :currency) do
-        changeset
+      if receiver_account do
+        if receiver_account.currency === get_change(changeset, :currency) do
+          changeset
+        else
+          changeset
+          |> add_error(:currency, "Currencies from both accounts have to be the same!")
+        end
       else
         changeset
-        |> add_error(:currency, "Currencies from both accounts have to be the same!")
       end
+
   end
 
   defp validate_balance(changeset) do

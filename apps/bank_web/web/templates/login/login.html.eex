@@ -1,11 +1,14 @@
-<%= form_for @conn, login_path(@conn, :login),[as: :login], fn f -> %>
+<%= form_for @changeset, login_path(@conn, :login),[as: :login], fn f -> %>
 <div class="input-group">
+    <%= error_tag f, :user %>
     <%= label f, "email:", class: "input-label"%>
     <%= text_input f, :email, class: "input-text" %>
+    <%= error_tag f, :email %>
 </div>
 <div class="input-group">
     <%= label f, "password:", class: "input-label"%>
     <%= password_input f, :password, class: "input-text" %>
+    <%= error_tag f, :password %>
 </div>
   <%= submit "Login" %>
 

@@ -25,5 +25,4 @@ defmodule Bank.UsersQueries do
         Repo.insert(user)
     end
 
-
 end
