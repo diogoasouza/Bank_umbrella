@@ -10,12 +10,50 @@ defmodule Bank.Transfers do
     timestamps()
   end
 
-  @required_fields ~w(amount to)a
-  @optional_fields ~w(currency date from)a
+  @required_fields ~w(amount to currency date from)a
+  @optional_fields ~w()a
   def changeset(user, params \\ %{}) do
         user
-        |> cast(params, @required_fields ++ @optional_fields)
+        |> cast(params, @required_fields)
         |> validate_required(@required_fields)
   end
 
+  def new_transfer(struct, params \\%{}) do
+    struct
+    |> cast(params, @required_fields)
+    |> validate_required(@required_fields)
+    |> validate_receiver
+    |> validate_currency
+    |> validate_balance
+  end
+  defp validate_currency(changeset) do
+      IO.inspect(changeset)
+      receiver_account = Bank.AccountsQueries.get_by_id(get_change(changeset, :to))
+      if receiver_account.currency === get_change(changeset, :currency) do
+        changeset
+      else
+        changeset
+        |> add_error(:currency, "Currencies from both accounts have to be the same!")
+      end
+  end
+
+  defp validate_balance(changeset) do
+    sender_account = Bank.AccountsQueries.get_by_id(get_change(changeset, :from))
+    if sender_account.balance >= get_change(changeset, :amount) do
+        changeset
+      else
+        changeset
+        |> add_error(:amount, "Insuficient balance!")
+    end
+  end
+
+  defp validate_receiver(changeset) do
+    receiver_account = Bank.AccountsQueries.get_by_id(get_change(changeset, :to))
+    if (receiver_account && (get_change(changeset, :to) != get_change(changeset, :from))) do
+      changeset
+    else
+      changeset
+      |> add_error(:to, "Invalid Receiver!")
+    end
+  end
 end

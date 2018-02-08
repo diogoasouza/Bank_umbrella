@@ -30,11 +30,13 @@ defmodule Bank.TransfersQueries do
   end
 
  def new_transfer(sender,receiver,amount, currency) do
-   changeset = Bank.Transfers.changeset(%Bank.Transfers{}, %{amount: amount, currency: currency, to: receiver, from: sender, date: NaiveDateTime.utc_now()})
-   IO.inspect(changeset)
+     changeset = Bank.Transfers.new_transfer(%Bank.Transfers{}, %{amount: amount, currency: currency, to: receiver, from: sender, date: NaiveDateTime.utc_now()})
+     IO.inspect(changeset)
+     if changeset.valid? do
+       Bank.AccountsQueries.withdrawl(sender, amount)
+       Bank.AccountsQueries.deposit(receiver, amount)
+     end
      create(changeset)
-     Bank.AccountsQueries.withdrawl(sender, amount)
-     Bank.AccountsQueries.deposit(receiver, amount)
  end
     def create(transfer) do
         Repo.insert(transfer)

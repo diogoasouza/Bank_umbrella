@@ -17,6 +17,12 @@ defmodule BankWeb.TransfersController do
         render conn, "list.html", [sender: transfers_sender, receiver: transfers_receiver]
     end
 
+    def new(conn, %{errors: errors}) do
+      account_id = String.to_integer(Plug.Conn.get_session(conn, "account_id"))
+      account = Bank.AccountsQueries.get_by_owner(account_id)
+      render conn, "create.html", [changeset: errors, account: account]
+    end
+
     def new(conn, _params) do
       account_id = String.to_integer(Plug.Conn.get_session(conn, "account_id"))
       changeset = Bank.Transfers.changeset(%Bank.Transfers{}, %{})
@@ -27,8 +33,12 @@ defmodule BankWeb.TransfersController do
     def add(conn,  %{"transfers" => transfers}) do
       user_id =  String.to_integer(Plug.Conn.get_session(conn, "user_id"))
       account = Bank.AccountsQueries.get_by_owner(user_id)
-      Bank.TransfersQueries.new_transfer(account.id, String.to_integer(Map.get(transfers, "to")), Map.get(transfers, "amount"), account.currency)
-      redirect conn, to: summary_path(conn, :index)
+      changeset = Bank.TransfersQueries.new_transfer(account.id, String.to_integer(Map.get(transfers, "to")), Map.get(transfers, "amount"), account.currency)
+      case changeset do
+          {:ok, _} -> redirect conn, to: summary_path(conn, :index)
+          {:error, reasons} -> new conn, %{errors: reasons}
+      end
+
     end
 
     # def create(conn, %{errors: errors}) do
