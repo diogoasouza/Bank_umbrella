@@ -1,5 +1,6 @@
 defmodule BankWeb.TransfersView do
     use BankWeb.Web, :view
+    use Phoenix.HTML
 
     def format_money(amount) do
       Float.to_string(amount, decimals: 2)
@@ -22,4 +23,6 @@ defmodule BankWeb.TransfersView do
       date = NaiveDateTime.to_date(date)
       Date.to_string(date)
     end
+
+    
 end

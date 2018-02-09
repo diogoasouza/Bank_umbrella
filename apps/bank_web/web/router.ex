@@ -25,6 +25,8 @@ defmodule BankWeb.Router do
     get "/transfers/", TransfersController, :list
     get "/transfers/new", TransfersController, :new
     post "/transfers/new", TransfersController, :add
+    get "/transfers/rateio", TransfersController, :create
+    post "/transfers/rateio", TransfersController, :save
     get "/currency/convert", CurrencyController, :index
     post "/currency/convert", CurrencyController, :convert
   end

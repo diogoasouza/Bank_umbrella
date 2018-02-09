@@ -16,6 +16,7 @@
       <li><a href="<%= summary_path(@conn, :index) %>" >Home</a></li>
       <li><a href="<%= transfers_path(@conn, :list) %>" >Ver transferencias</a></li>
       <li><a href="<%= transfers_path(@conn, :new) %>" >Fazer nova transferencia</a></li>
+      <li><a href="<%= transfers_path(@conn, :create) %>" >Rateio de transferencia</a></li>
       <li><a href="<%= currency_path(@conn, :index) %>" >Converter moeda da conta</a></li>
       <li><a href="<%= login_path(@conn, :delete) %>" >Logout </a></li>
     </ul>

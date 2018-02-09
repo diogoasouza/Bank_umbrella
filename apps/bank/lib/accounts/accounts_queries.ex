@@ -21,9 +21,21 @@ defmodule Bank.AccountsQueries do
         Repo.insert(user)
     end
 
+    def withdrawl(id, amount) when is_float(amount) do
+        account = Repo.get!(Accounts, id)
+        changes = Ecto.Changeset.change account, balance: account.balance - amount
+        Repo.update changes
+    end
+
     def withdrawl(id, amount) do
         account = Repo.get!(Accounts, id)
         changes = Ecto.Changeset.change account, balance: account.balance - String.to_integer(amount)
+        Repo.update changes
+    end
+
+    def deposit(id, amount) when is_float(amount) do
+        account = Repo.get!(Accounts, id)
+        changes = Ecto.Changeset.change account, balance: account.balance + amount
         Repo.update changes
     end
 

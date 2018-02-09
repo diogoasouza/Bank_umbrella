@@ -45,6 +45,7 @@ defmodule BankWeb.Web do
       import BankWeb.Router.Helpers
       import BankWeb.ErrorHelpers
       import BankWeb.Gettext
+      import Todos.InputHelpers
     end
   end
 
