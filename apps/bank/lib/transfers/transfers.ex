@@ -33,7 +33,7 @@ defmodule Bank.Transfers do
           changeset
         else
           changeset
-          |> add_error(:currency, "Currencies from both accounts have to be the same!")
+          |> add_error(:currency, "Currencies from all accounts have to be the same!")
         end
       else
         changeset
@@ -47,7 +47,7 @@ defmodule Bank.Transfers do
         changeset
       else
         changeset
-        |> add_error(:amount, "Insuficient balance!")
+        |> add_error(:amount, "Insufficient balance!")
     end
   end
 

@@ -40,15 +40,15 @@ defmodule BankWeb.CurrencyControllerTest do
 
 
  test "convert account's currency, and redirect to summary page", %{conn: conn} do
-   account = Bank.AccountsQueries.get_by_id(1)
+   account = Bank.AccountsQueries.get_by_id(3)
    currency_test = case account.currency do
      "Real"->  "Dollar"
-     "Dollar" -> "Real"
+     "Dollar" -> "Euro"
      "Euro" -> "Dollar"
    end
    conn = conn
-   |> assign(:user_id, "1")
-   |> assign(:account_id, "1")
+   |> assign(:user_id, "3")
+   |> assign(:account_id, "3")
    |> post("/currency/convert", %{ accounts: %{"currency" => currency_test}})
 
    assert html_response(conn, 302) =~ "redirected"
