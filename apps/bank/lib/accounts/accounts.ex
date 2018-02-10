@@ -15,12 +15,12 @@ defmodule Bank.Accounts do
   def changeset(user, params \\ %{}) do
         user
         |> cast(params, @required_fields)
-        |> unique_constraint(:email, message: "that user already has an account")
+        |> unique_constraint(:owner, message: "that user already has an account")
         |> validate_required(@required_fields)
   end
 
-  def new_account(user) do
-    changeset = changeset(%Bank.Accounts{}, %{balance: 1000, currency: "Real", owner: user })
+  def new_account(user_id) do
+    changeset = changeset(%Bank.Accounts{}, %{balance: 1000, currency: "Real", owner: user_id })
     Bank.AccountsQueries.create(changeset)
   end
 end

@@ -20,8 +20,7 @@ defmodule BankWeb.Router do
 
   scope "/", BankWeb do
     pipe_through :authorized
-    get "/", PageController, :index
-    get "/summary/", SummaryController, :index
+    get "/", SummaryController, :index
     get "/transfers/", TransfersController, :list
     get "/transfers/new", TransfersController, :new
     post "/transfers/new", TransfersController, :add

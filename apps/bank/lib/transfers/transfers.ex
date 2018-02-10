@@ -11,7 +11,6 @@ defmodule Bank.Transfers do
   end
 
   @required_fields ~w(amount to currency date from)a
-  @optional_fields ~w()a
   def changeset(user, params \\ %{}) do
         user
         |> cast(params, @required_fields)
@@ -26,6 +25,7 @@ defmodule Bank.Transfers do
     |> validate_currency
     |> validate_balance
   end
+
   defp validate_currency(changeset) do
       receiver_account = Bank.AccountsQueries.get_by_id(get_change(changeset, :to))
       if receiver_account do

@@ -41,24 +41,38 @@ defmodule Bank.Users do
    # end
 
    defp validate_user(changeset) do
-       user = Bank.UsersQueries.get_by_email(get_change(changeset, :email))
+     if get_change(changeset, :email) do
+       email = String.downcase(get_change(changeset, :email))
+       user = Bank.UsersQueries.get_by_email(email)
        if user do
          changeset
        else
          changeset
           |> add_error(:user, "User doesnt exist!")
        end
+    else
+      changeset
+       |> add_error(:user, "Please fill all camps!")
+     end
+
    end
 
    defp validate_password(changeset) do
+     if get_change(changeset, :password) && get_change(changeset, :email) do
        password = get_change(changeset, :password)
-       user = Bank.UsersQueries.get_by_email(get_change(changeset, :email))
+       email = String.downcase(get_change(changeset, :email))
+       user = Bank.UsersQueries.get_by_email(email)
        if user && password == user.password do
          changeset
        else
          changeset
           |> add_error(:password, "Password and email doesnt match!")
        end
+     else
+       changeset
+        |> add_error(:password, "Please fill all camps!")
+     end
+
    end
 
 end

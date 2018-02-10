@@ -9,6 +9,6 @@ defmodule BankWeb.SummaryController do
         user = Bank.UsersQueries.get_by_id(id)
         conn
         |> Plug.Conn.put_session("account_id", Integer.to_string(account.id))
-        |> render "summary.html", [account: account, user: user]
+        |> render("summary.html", [account: account, user: user])
     end
 end

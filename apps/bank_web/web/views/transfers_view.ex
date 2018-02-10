@@ -24,5 +24,5 @@ defmodule BankWeb.TransfersView do
       Date.to_string(date)
     end
 
-    
+
 end
