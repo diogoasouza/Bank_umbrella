@@ -20,7 +20,6 @@ defmodule BankWeb.AuthorizedPlug do
     end
 
     defp authorize_user(conn, _) do
-      IO.puts "UHEUEHUEHUEHUEHUEHUEHUEHUE"
         conn
         |> put_session(:user_id, conn.assigns[:user_id] || get_session(conn, :user_id) )
     end
