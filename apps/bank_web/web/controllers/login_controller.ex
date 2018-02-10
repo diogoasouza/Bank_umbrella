@@ -3,6 +3,7 @@ defmodule BankWeb.LoginController do
 
 
     def index(conn, %{errors: errors}) do
+      IO.inspect errors
       conn
       |> render("login.html", changeset: errors)
     end
