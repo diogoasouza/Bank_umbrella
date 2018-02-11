@@ -1,6 +1,5 @@
 defmodule UsersTest do
   use ExUnit.Case
-  doctest Bank.Users
 
   test "valid changeset" do
     changeset = Bank.Users.changeset(%Bank.Users{}, %{name: "Diogo", email: "diogo.asouza@gmail.com" , password: "123"})

@@ -29,7 +29,7 @@ defmodule BankWeb.LoginControllerTest do
 
   test "renders the login page with errors message when the user doesnt exist ", %{conn: conn} do
     conn = conn
-    |> post("/login", %{ login: %{email: "diogo.asouza2@gmail.com", password: "abc"}})
+    |> post("/login", %{ login: %{email: "email234823472834@gmail.com", password: "abc"}})
 
     assert html_response(conn, 200) =~ "User doesnt exist!"
   end

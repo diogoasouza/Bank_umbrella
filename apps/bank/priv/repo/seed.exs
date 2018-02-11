@@ -1,7 +1,7 @@
 unless (Bank.UsersQueries.any) do
-    Bank.UsersQueries.create(Bank.Users.changeset(%Bank.Users{}, %{name: "Diogo", email: "diogo.asouza@gmail.com", password: "123"}))
-    Bank.UsersQueries.create(Bank.Users.changeset(%Bank.Users{}, %{name: "Matheus", email: "matheus@gmail.com", password: "abc"}))
-    Bank.UsersQueries.create(Bank.Users.changeset(%Bank.Users{}, %{name: "Teste", email: "teste@gmail.com", password: "123"}))
+    Bank.UsersQueries.create(Bank.Users.changeset(%Bank.Users{}, %{name: "Diogo", email: "diogo.asouza@gmail.com", password: Base.hex_encode32("123")}))
+    Bank.UsersQueries.create(Bank.Users.changeset(%Bank.Users{}, %{name: "Matheus", email: "matheus@gmail.com", password: Base.hex_encode32("abc")}))
+    Bank.UsersQueries.create(Bank.Users.changeset(%Bank.Users{}, %{name: "Teste", email: "teste@gmail.com", password: Base.hex_encode32("123")}))
 end
 
 unless (Bank.AccountsQueries.any) do

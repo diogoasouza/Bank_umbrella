@@ -1,7 +1,6 @@
 defmodule AccountsTest do
   use ExUnit.Case
 
-  doctest Bank.Accounts
 
   test "valid changeset" do
     changeset = Bank.Accounts.changeset(%Bank.Accounts{}, %{balance: "2000", currency: "BRL", owner: 1})

@@ -1,7 +1,6 @@
 defmodule TransfersTest do
   use ExUnit.Case
 
-  doctest Bank.Transfers
 
   test "valid changeset" do
     changeset = Bank.Transfers.changeset(%Bank.Transfers{}, %{amount: "1000", currency: "BRL", to: 1, from: 2, date: "2019-05-23 09:00:00"})

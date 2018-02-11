@@ -19,7 +19,7 @@ defmodule Bank.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :postgrex, :ecto, :comeonin],
+      extra_applications: [:logger, :postgrex, :ecto],
       mod: {Bank.Application, []}
     ]
   end
@@ -29,7 +29,6 @@ defmodule Bank.MixProject do
     [
       {:ecto, "~> 2.2"},
       {:postgrex, "~> 0.13.4"},
-      {:comeonin, "~> 3.0"},
       {:pbkdf2_elixir, "~> 0.12"},
       {:comeonin_ecto_password, "~> 2.1"}
       # {:dep_from_hexpm, "~> 0.3.0"},
@@ -37,7 +36,8 @@ defmodule Bank.MixProject do
       # {:sibling_app_in_umbrella, in_umbrella: true},
     ]
   end
-
+#set MIX_ENV="test" when running tests and MIX_ENV="" when running the application
+#command on windows powershell : $env:MIX_ENV=""
   defp aliases do
     ["init": ["ecto.create", "ecto.migrate", "run priv/repo/seed.exs"]]
   end
