@@ -11,7 +11,7 @@ defmodule BankWeb.SummaryControllerTest do
     |> assign(:user_id, "1")
     |> get("/")
 
-    assert html_response(conn, 200) =~ "Bem vindo"
+    assert html_response(conn, 200) =~ "Welcome"
   end
 
 

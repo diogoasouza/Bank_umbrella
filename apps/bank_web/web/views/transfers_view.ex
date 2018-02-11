@@ -8,9 +8,9 @@ defmodule BankWeb.TransfersView do
 
     def format_currency(currency) do
       case String.downcase(currency) do
-        "real" -> "reais"
-        "dollar" -> "dolares"
-        "euro" -> "euros"
+        "brl" -> "reais"
+        "usd" -> "dolares"
+        "eur" -> "euros"
       end
     end
 

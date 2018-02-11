@@ -4,7 +4,7 @@ defmodule AccountsTest do
   doctest Bank.Accounts
 
   test "valid changeset" do
-    changeset = Bank.Accounts.changeset(%Bank.Accounts{}, %{balance: "2000", currency: "Real", owner: 1})
+    changeset = Bank.Accounts.changeset(%Bank.Accounts{}, %{balance: "2000", currency: "BRL", owner: 1})
     assert changeset.valid?
   end
 

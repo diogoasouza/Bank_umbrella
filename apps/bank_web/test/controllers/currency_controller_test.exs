@@ -42,9 +42,9 @@ defmodule BankWeb.CurrencyControllerTest do
  test "convert account's currency, and redirect to summary page", %{conn: conn} do
    account = Bank.AccountsQueries.get_by_id(3)
    currency_test = case account.currency do
-     "Real"->  "Dollar"
-     "Dollar" -> "Euro"
-     "Euro" -> "Dollar"
+     "BRL"->  "USD"
+     "USD" -> "EUR"
+     "EUR" -> "USD"
    end
    conn = conn
    |> assign(:user_id, "3")

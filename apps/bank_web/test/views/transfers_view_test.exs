@@ -14,17 +14,17 @@ defmodule BankWeb.TransfersViewTest do
     end
 
     test "should convert a the currency name to its plural, Real -> reais" do
-        formatted = BankWeb.SummaryView.format_currency("Real")
+        formatted = BankWeb.SummaryView.format_currency("BRL")
         assert formatted == "reais"
     end
 
     test "should convert a the currency name to its plural, Dollar -> dolares" do
-        formatted = BankWeb.SummaryView.format_currency("Dollar")
+        formatted = BankWeb.SummaryView.format_currency("USD")
         assert formatted == "dolares"
     end
 
     test "should convert a the currency name to its plural, Euro -> euros" do
-        formatted = BankWeb.SummaryView.format_currency("Euro")
+        formatted = BankWeb.SummaryView.format_currency("EUR")
         assert formatted == "euros"
     end
 

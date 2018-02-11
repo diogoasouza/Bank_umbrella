@@ -15,8 +15,8 @@ defmodule BankWeb.CurrencyController do
       account_id = String.to_integer(conn.assigns[:account_id] || Plug.Conn.get_session(conn, "account_id"))
       account = Bank.AccountsQueries.get_by_id(account_id)
       amount = account.balance
-      account_currency_api = format_currency(account.currency)
-      currency_api = format_currency(currency)
+      account_currency_api = account.currency
+      currency_api = currency
       if account.currency != currency do
         amount = amount * get_rate(account_currency_api, currency_api)
         Bank.AccountsQueries.update_field(Bank.Accounts.changeset(account, %{currency: currency}))
