@@ -28,7 +28,6 @@ defmodule BankWeb.ConnCase do
   end
 
   setup tags do
-
     _ = tags
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

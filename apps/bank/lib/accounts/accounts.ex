@@ -1,18 +1,19 @@
 defmodule Bank.Accounts do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Bank.{Users, Transfers, Accounts, AccountsQueries}
 
   @moduledoc """
- This is the Users module.
- It contains the accounts schema and the changeset used to create a new account
- """
+  This is the Users module.
+  It contains the accounts schema and the changeset used to create a new account
+  """
 
   schema "accounts" do
-    field :balance, :float
-    field :currency, :string
-    belongs_to :user, Bank.Users, foreign_key: :owner
-    has_many :outgoing_transfers, Bank.Transfers, foreign_key: :to
-    has_many :incoming_transfers, Bank.Transfers, foreign_key: :from
+    field(:balance, :float)
+    field(:currency, :string)
+    belongs_to(:user, Users, foreign_key: :owner)
+    has_many(:outgoing_transfers, Transfers, foreign_key: :to)
+    has_many(:incoming_transfers, Transfers, foreign_key: :from)
     timestamps()
   end
 
@@ -25,10 +26,10 @@ defmodule Bank.Accounts do
     so there's only one type of account an user can have
   """
   def changeset(user, params \\ %{}) do
-        user
-        |> cast(params, @required_fields)
-        |> unique_constraint(:owner, message: "that user already has an account")
-        |> validate_required(@required_fields)
+    user
+    |> cast(params, @required_fields)
+    |> unique_constraint(:owner, message: "that user already has an account")
+    |> validate_required(@required_fields)
   end
 
   @doc """
@@ -37,7 +38,7 @@ defmodule Bank.Accounts do
     and the currency from Brasil is BRL
   """
   def new_account(user_id) do
-    changeset = changeset(%Bank.Accounts{}, %{balance: 1000, currency: "BRL", owner: user_id })
-    Bank.AccountsQueries.create(changeset)
+    changeset = changeset(%Accounts{}, %{balance: 1000, currency: "BRL", owner: user_id})
+    AccountsQueries.create(changeset)
   end
 end

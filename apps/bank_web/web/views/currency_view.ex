@@ -1,4 +1,3 @@
 defmodule BankWeb.CurrencyView do
-    use BankWeb.Web, :view
-
+  use BankWeb.Web, :view
 end

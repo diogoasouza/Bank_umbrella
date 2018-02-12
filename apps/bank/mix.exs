@@ -29,16 +29,19 @@ defmodule Bank.MixProject do
     [
       {:ecto, "~> 2.2"},
       {:postgrex, "~> 0.13.4"},
-      {:pbkdf2_elixir, "~> 0.12"},
-      {:comeonin_ecto_password, "~> 2.1"}
+      {:credo, "~> 0.9.0-rc1", only: [:dev, :test], runtime: false}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
       # {:sibling_app_in_umbrella, in_umbrella: true},
     ]
   end
-#set MIX_ENV="test" when running tests and MIX_ENV="" when running the application
-#command on windows powershell : $env:MIX_ENV=""
+
+  # set MIX_ENV="test" when running tests and MIX_ENV="" when running the application
+  # command on windows powershell : $env:MIX_ENV=""
   defp aliases do
-    ["init": ["ecto.create", "ecto.migrate", "run priv/repo/seed.exs"]]
+    [
+      init: ["ecto.create", "ecto.migrate", "run priv/repo/seed.exs"],
+      reset: ["ecto.drop", "init"]
+    ]
   end
 end
