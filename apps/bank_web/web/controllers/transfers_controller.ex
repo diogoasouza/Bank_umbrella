@@ -103,7 +103,7 @@ defmodule BankWeb.TransfersController do
       |> put_flash(:error, "Insufficient balance!")
       |> redirect(to: transfers_path(conn, :create))
     else
-      if check_receivers(to) do
+      if !Enum.member?(to, Integer.to_string(account.id)) && check_receivers(to) do
         if check_currency(account.currency, to) do
           for e <- to do
             changeset =
