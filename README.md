@@ -43,17 +43,17 @@ Install rebar (Erlang build tool)
 mix local.rebar 
 ```
 
-Go to the Assets folders and install the npm dependencies
-
-```
-npm install
-```
-
 On the root of the project, get the dependencies and compile them
 
 ```
 mix deps.get
 mix deps.compile
+```
+
+Go to the Assets folders and install the npm dependencies
+
+```
+npm install
 ```
 
 Now go to the root of the bank app (apps/bank) and create the database
