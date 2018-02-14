@@ -62,7 +62,7 @@ Now go to the root of the bank app (apps/bank) and create the database
 mix init
 ```
 
-Dont forget to configure your database on the config.exs file before running the init task!
+Dont forget to configure your database on the apps/bank/config/config.exs file before running the init task!
 
 ## Running the application
 
