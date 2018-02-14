@@ -32,6 +32,8 @@ config :bank, Bank.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "bank",
   username: "postgres",
-  password: "root"
+  password: "root",
+  hostname: "db",
+  port: 5432
 
 config :bank, ecto_repos: [Bank.Repo]
